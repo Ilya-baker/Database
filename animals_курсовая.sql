@@ -7,11 +7,11 @@ CREATE TABLE IF NOT EXISTS `owner` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `firstname` VARCHAR(255) NOT NULL COMMENT 'имя',
   `lastname` VARCHAR(255) NOT NULL COMMENT 'фамилия',
-  `created_at` DATETIME NOT NULL DEFAULT NOW() COMMENT 'дата и время регистрацйии клиента ',
+  `created_at` DATETIME NOT NULL DEFAULT NOW() COMMENT 'дата и время регистрации клиента ',
   `address` VARCHAR(255) NULL DEFAULT NULL COMMENT 'адрес',
   `email` VARCHAR(255) NULL DEFAULT NULL COMMENT 'электронный адрес',
   `phone` BIGINT(11) UNSIGNED NULL DEFAULT NULL COMMENT 'телефон',
-  `birthday` DATE NULL DEFAULT NULL COMMENT 'день рождения',
+  `age` INT(3) UNSIGNED NOT NULL COMMENT 'возраст',
   `comments` VARCHAR(255) NULL DEFAULT NULL COMMENT 'комментарии',
   PRIMARY KEY (`id`),
   INDEX `firstname_lastname_ind` (`firstname` ASC, `lastname` ASC) INVISIBLE)
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `animal` (
   `castration` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'кастрация: 0 - нет, 1 - да',
   `created_at` DATETIME NOT NULL DEFAULT NOW() COMMENT 'дата и время регистрации питомца',
   `contract_num` INT(10) UNSIGNED NOT NULL COMMENT 'номер договора: на каждого отдельного питомца заводится договор обслуживания с индивидуальным номером ',
-  `end` DATETIME NULL DEFAULT NULL COMMENT 'дата смерти',
+  `end` DATE NULL DEFAULT NULL COMMENT 'дата смерти',
   `comments` VARCHAR(255) NULL DEFAULT NULL COMMENT 'комментарии',
   PRIMARY KEY (`id`),
   INDEX `owner_idx` (`owner_id` ASC) VISIBLE,
@@ -403,107 +403,109 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'груминг (стрижка животных)';
 
-INSERT INTO `owner` VALUES 
-('1','Eva','Feest','2020-08-26 23:26:12','15919 Arielle Point Apt. 957\nLake Vinniehaven, IL 76417-7701','schneider.alex@example.org','78969710845','1988-11-25',NULL),
-('2','Sarah','Altenwerth','2012-02-22 17:24:52','219 Ondricka Pine Suite 667\nJohannashire, MN 02706-1109','fturner@example.org','78514831784','1975-09-19',NULL),
-('3','Pearlie','Stark','2013-11-29 03:18:13','7495 Evelyn Hollow Apt. 977\nNorth Anita, MS 13704-3370','colleen.lesch@example.com','78205058767','1998-04-16',NULL),
-('4','Breanne','Adams','2012-03-03 00:52:47','793 Bartoletti Lane Apt. 817\nCarrieport, IA 69501','johnson.lisa@example.com','78113226476','1972-03-26',NULL),
-('5','Braden','Gislason','2011-10-09 00:31:46','8373 Camila Mission\nNorth Claire, ND 97512-4278','zetta.prohaska@example.net','78231641355','1987-02-05',NULL),
-('6','Dorris','Sawayn','2017-01-13 06:02:20','260 Bashirian Turnpike\nAnkundingland, LA 99684-4830','murphy.little@example.com','79450623794','1977-06-27',NULL),
-('7','Angie','White','2016-09-21 23:45:54','24840 Mraz Street\nReicherttown, NM 69592-1799','jacquelyn.sipes@example.com','79158100500','1970-02-28',NULL),
-('8','Orion','Powlowski','2013-10-05 22:27:53','1141 Tillman Loaf\nWest Lindsayburgh, AL 83589-8888','myrtice.herzog@example.com','78888906269','1996-01-17',NULL),
-('9','Raymond','Parisian','2013-01-14 19:16:27','97993 Monique Glens\nElroyfort, WA 22295','fisher.elmer@example.com','79005928825','1985-11-13',NULL),
-('10','Destiney','Marks','2011-10-28 03:48:34','493 Brant Haven Suite 421\nPort Ora, GA 21798','leopoldo62@example.com','78577639095','1975-02-20',NULL),
-('11','Perry','Hintz','2012-07-28 23:00:10','641 Dallas Mill\nWest Adelamouth, WY 04650-6216','otis82@example.net','79637321167','1998-03-25',NULL),
-('12','Macy','Will','2019-03-09 18:28:31','049 Yost Corner\nBeckerstad, SD 12223-4633','bahringer.antwon@example.net','78629243324','1983-07-28',NULL),
-('13','Owen','Koepp','2015-08-24 23:40:31','0091 Monty Burgs Suite 340\nNorth Haskell, OK 55793','hills.russel@example.org','79613687950','1972-04-02',NULL),
-('14','Vernie','Jast','2020-05-07 09:38:08','06762 Dakota Valleys Suite 702\nCummingsberg, CT 99301','chaz.brown@example.org','78550942387','1984-05-20',NULL),
-('15','Rahsaan','Schuster','2012-05-18 20:25:56','0719 Gonzalo Trafficway\nFarrellborough, WA 56107','tristian12@example.org','78914259376','1986-04-27',NULL),
-('16','Viola','Quitzon','2013-01-28 00:39:51','0807 Von Cape Suite 129\nNorth Albert, OH 18818-9182','hermiston.raegan@example.net','79806938462','1999-04-29',NULL),
-('17','Rowena','Emard','2016-12-18 08:49:08','7787 Wendy Dale\nMarciatown, RI 88870','ziemann.flossie@example.org','79267225991','1988-03-06',NULL),
-('18','Fritz','Hahn','2013-02-25 02:06:17','8353 Von Isle Suite 865\nWest Gia, WY 67597-8757','litzy07@example.com','78696051265','1999-03-06',NULL),
-('19','Jay','Reilly','2015-12-05 00:24:02','7352 Wisoky Loop\nNew Lavina, FL 83598-7304','clark.ledner@example.org','78536043734','1972-03-17',NULL),
-('20','Sabryna','Hermiston','2018-06-18 18:58:42','76510 Ryley Corners\nNew Caitlynhaven, AR 07227-5052','spinka.kamryn@example.net','78784418094','1999-10-31',NULL),
-('21','Johnathan','Schumm','2017-04-15 00:38:21','465 Rice Streets Suite 247\nNienowborough, MD 42886','maci.white@example.net','79061313648','1987-06-05',NULL),
-('22','Precious','Schumm','2015-03-28 05:31:27','5418 Marian Stravenue Apt. 963\nWest Sydneebury, PA 68803-6254','rosario.windler@example.org','78944629643','1970-05-25',NULL),
-('23','Jonathan','Nader','2017-10-16 04:44:53','48088 Antonietta Causeway\nEast Dannieborough, WA 78415','elwyn.stoltenberg@example.net','79337885194','1982-04-15',NULL),
-('24','Taya','Grimes','2014-04-10 13:32:23','0760 Gibson Lights Apt. 776\nPort Kaitlyn, IL 37638','keira02@example.org','79809591659','1992-03-29',NULL),
-('25','Molly','Koepp','2012-08-25 02:18:36','57110 Jewell Light Apt. 461\nSophieshire, OR 24259','jamarcus.bailey@example.com','79262728668','1997-06-05',NULL),
-('26','Marquise','Skiles','2017-12-08 22:34:13','531 Sally Village\nNew Michelleland, OR 35082-0943','daphney13@example.net','79197799170','1981-12-31',NULL),
-('27','Craig','Doyle','2013-09-23 15:58:50','816 Mayer Union Apt. 018\nSouth Nora, DC 18343-5713','schmidt.reanna@example.net','78833278250','1981-07-12',NULL),
-('28','Jaleel','Witting','2020-07-04 11:11:00','1585 Brooke Harbor\nLake Twila, PA 48494-4097','stamm.camryn@example.net','79486953407','1992-07-23',NULL),
-('29','Mary','Bode','2013-07-15 05:51:16','82697 Serena Pass\nSouth Jerroldtown, VA 41262','jess.bergstrom@example.net','79765289683','1972-12-29',NULL),
-('30','Kamryn','Boyer','2012-06-01 11:36:44','3895 Kiehn Springs Apt. 951\nJerryton, MT 88052-5289','odie89@example.org','78161448364','1996-05-05',NULL),
-('31','Roy','Goldner','2010-11-11 18:28:43','78215 Wolf Gateway Apt. 899\nQuitzonville, NV 83618-6480','yshanahan@example.org','78356622648','1977-11-01',NULL),
-('32','Joana','Schumm','2013-09-18 06:56:38','75789 Schuster Way Suite 519\nLake Brent, CA 78973-8979','adolf.bahringer@example.net','79027888271','1997-12-04',NULL),
-('33','Ella','Kreiger','2011-03-04 13:54:51','45385 Wilderman Burgs Suite 776\nWillton, IA 02268','rodger36@example.com','78734843094','1990-03-30',NULL),
-('34','Kasey','O\'Reilly','2015-03-08 11:43:38','230 Kozey Underpass\nRogahnmouth, UT 17072','lindgren.brielle@example.org','78356852499','1999-02-01',NULL),
-('35','Reymundo','Rosenbaum','2014-06-19 18:20:00','86380 Meda Mountains Apt. 811\nRueckerview, TN 18994-2774','bernhard.wilber@example.org','78525770914','1989-04-04',NULL),
-('36','Norwood','Von','2018-05-08 22:03:50','549 Walton Terrace Apt. 132\nNew Magnoliaton, MS 26081-4130','swunsch@example.net','78819096605','1981-10-19',NULL),
-('37','Lafayette','Christiansen','2015-12-31 20:17:09','91264 Paula Camp Apt. 305\nAmieberg, NM 71106-6951','rau.kaleigh@example.net','79682654259','1994-08-16',NULL),
-('38','Bulah','Johnson','2014-05-02 00:56:45','938 Johnson Brook\nSchadenfurt, OK 83409-2725','trent04@example.org','78666476386','1980-05-21',NULL),
-('39','Hudson','Wiza','2012-03-15 06:52:10','86186 Antone Village\nNorth Frederik, OR 22788','deshawn.glover@example.net','78754254839','1993-05-19',NULL),
-('40','Vena','Connelly','2019-02-23 23:22:19','321 Bergstrom Plain Suite 274\nAngelicaview, MS 52736-2338','mazie73@example.net','79545280193','1987-02-01',NULL),
-('41','Florine','Witting','2015-01-16 18:16:08','4394 Boyer Vista Apt. 427\nEast Amelytown, SD 86200-8013','august.kuphal@example.org','79815257340','1977-05-01',NULL),
-('42','Adrianna','Waelchi','2017-04-14 01:16:21','9247 Kari Fords\nCarolineview, WI 40888-7942','emard.christiana@example.net','78461147396','1995-04-11',NULL),
-('43','Orrin','Haag','2020-05-29 21:00:18','2605 Osinski Orchard Apt. 376\nBergestad, RI 02670','dubuque.candido@example.org','79724912653','1979-04-27',NULL),
-('44','Emerald','Stark','2011-10-11 00:06:49','367 Don Prairie Apt. 731\nPort Lynn, SD 10368','cortiz@example.com','79714767876','1972-04-29',NULL),
-('45','Reta','Mohr','2013-09-09 09:07:00','6401 King Spur Apt. 265\nNicolasbury, CT 54903','ugusikowski@example.net','79042884363','1983-06-25',NULL),
-('46','Brenden','Crona','2017-03-18 20:46:54','43803 Maryjane Ranch Suite 240\nLockmanview, NE 69686-7083','jarret.bartoletti@example.com','78275481583','1985-03-25',NULL),
-('47','Lacey','Langworth','2015-01-06 19:08:27','62321 Lockman Vista\nZemlakton, MO 15485-1757','marjolaine69@example.org','78313866476','1973-04-24',NULL),
-('48','Kurt','Keeling','2020-04-12 18:06:31','0781 Selmer Corner\nLake Norberto, NE 15360-3074','florence.fritsch@example.com','78407042000','1995-02-04',NULL),
-('49','Noemi','Schulist','2016-12-19 18:05:04','661 Alda Burgs\nStiedemannfort, MS 91479','bud46@example.org','78784433527','1984-01-13',NULL),
-('50','Carolyne','Rogahn','2019-04-28 01:19:12','19609 Renner Springs Apt. 063\nSouth Bettye, AR 11942-6344','ynicolas@example.org','78079598097','1978-08-24',NULL),
-('51','Philip','Bogan','2017-11-09 06:28:42','920 Laury Ports Apt. 474\nWest Rhiannon, IN 57919-7587','deven.towne@example.org','78397004643','1975-01-18',NULL),
-('52','Kamryn','Doyle','2016-07-19 06:59:53','137 Jakubowski Ranch Suite 514\nWillbury, AL 70457','schoen.helga@example.net','79457582917','1987-08-10',NULL),
-('53','Terrell','Koelpin','2015-07-17 07:02:37','316 Malinda Freeway Apt. 919\nLake Gladyceville, IA 28450-2183','hilpert.ignacio@example.com','79119945463','1997-06-21',NULL),
-('54','Alda','Roberts','2019-05-14 01:59:01','990 Koepp Island\nLaurenceshire, MA 65736-8330','weimann.alysa@example.net','78576340517','2000-05-28',NULL),
-('55','Dorthy','Kerluke','2013-08-27 18:35:56','9684 Altenwerth Plaza\nWest Alessia, OH 30216-7057','abbie.lindgren@example.net','78793743221','1983-01-18',NULL),
-('56','Kim','Thiel','2020-03-10 21:55:02','1151 Haag Manor Apt. 664\nNorth Ruthie, IN 44832','block.arnoldo@example.com','78212694649','1981-01-30',NULL),
-('57','Whitney','Kuhlman','2019-02-26 15:49:17','2332 Abbott Plaza\nLake Elouiseland, IA 26144-2119','jocelyn02@example.net','78211117963','1998-08-06',NULL),
-('58','Robyn','Baumbach','2010-11-13 13:01:35','03961 Jason Light Apt. 610\nKoelpinland, WA 85395','sreichert@example.org','78088212753','1999-09-06',NULL),
-('59','Royce','O\'Reilly','2018-12-09 21:05:50','976 Harley Centers\nLake Eleonoreborough, SD 60355-2497','earnestine32@example.com','79861416599','1977-09-04',NULL),
-('60','Jennings','Waelchi','2011-03-07 02:33:53','1678 Durgan Way\nLake Ida, ID 32728','laverne.fahey@example.com','79655662995','1978-05-13',NULL),
-('61','Misael','Sawayn','2017-09-24 10:31:28','7772 Kobe Alley Suite 982\nFerryton, WI 14055','abner.morar@example.com','78614663845','1972-08-14',NULL),
-('62','Karlee','Spinka','2020-08-13 10:59:58','10672 Watsica Plains Apt. 242\nLittelmouth, SD 77509','nienow.daryl@example.net','79028695751','1974-09-21',NULL),
-('63','Mariam','O\'Reilly','2020-05-31 07:03:44','68119 Von Creek Apt. 446\nHalvorsonview, WY 75722','alice46@example.org','79546274400','1976-08-08',NULL),
-('64','Edd','Bartoletti','2011-12-29 22:17:27','05788 Wehner Harbors\nConnberg, WI 88749','ignatius90@example.com','79388471832','1975-08-10',NULL),
-('65','Mohammad','Schuster','2017-11-08 01:48:48','47868 Bauch Club Apt. 959\nNew Kaileyfort, AR 09069-9033','gleichner.johathan@example.com','79126397315','1975-02-25',NULL),
-('66','Carmel','Tromp','2018-12-19 13:13:39','96712 Fabian Canyon\nEast Kieranstad, MD 89058-9889','cbailey@example.net','78602448222','1985-04-16',NULL),
-('67','Tomas','Douglas','2016-08-26 16:50:05','95952 Kuvalis Common Suite 882\nSouth Israelburgh, IN 78547-1074','abbott.lenore@example.org','79620030450','1998-10-06',NULL),
-('68','Karelle','Klocko','2012-10-01 02:26:01','1215 Fanny Forge\nBrownfort, KY 69932-4429','maegan34@example.org','79647349782','1995-10-11',NULL),
-('69','Helga','Gulgowski','2015-01-02 15:32:30','6269 Bauch Bridge\nPort Sheamouth, PA 94483','jewell08@example.org','78690681213','1977-01-28',NULL),
-('70','Jennifer','Kshlerin','2020-03-15 10:26:34','1029 Wyman Parkway Suite 333\nSouth Christophe, CT 34035-6692','waelchi.jevon@example.com','78127128270','1990-02-21',NULL),
-('71','Carley','Dickinson','2013-02-06 07:51:27','1923 Ernestine Oval\nNew Tatyanafort, ME 72652','elliott21@example.org','78098503376','1975-05-05',NULL),
-('72','Dewayne','Boyle','2016-11-16 10:31:11','84750 Alek Turnpike\nBatzfort, NH 11848','boyer.wilber@example.net','79583183284','1987-07-19',NULL),
-('73','Neil','Powlowski','2015-11-22 18:49:52','5960 Langosh Throughway Suite 960\nWest Siennabury, RI 84111','nhudson@example.com','79841274297','1972-02-23',NULL),
-('74','Destiny','Feil','2016-11-30 06:46:23','758 Crist Corners Apt. 720\nJamiltown, KY 29889-6734','hartmann.brisa@example.com','79556485290','1994-11-30',NULL),
-('75','Ruthe','Ledner','2013-09-16 01:17:43','9438 DuBuque Pine Apt. 638\nBruenhaven, KS 28142-9410','scottie31@example.com','79488984860','1979-07-29',NULL),
-('76','Jorge','Hane','2017-09-15 14:47:12','57544 Polly Prairie\nZiemannview, UT 06788','gorczany.luciano@example.com','78382968446','1991-08-01',NULL),
-('77','Warren','Kuhlman','2015-10-12 12:11:42','92661 Buckridge Prairie\nStiedemannstad, NM 91396','karina19@example.com','79587958269','1993-02-04',NULL),
-('78','Kamryn','Dickinson','2017-04-20 16:49:15','3847 Orland Forges\nAnnalisebury, LA 91372','bayer.rowena@example.net','78549653227','1988-10-25',NULL),
-('79','Adrian','Hammes','2012-08-05 22:01:44','837 Ferry Mission Apt. 088\nNorth Neva, MS 31679-7458','eschuppe@example.net','78343937975','1988-02-22',NULL),
-('80','Kamille','Stiedemann','2016-05-06 19:49:32','8350 Altenwerth Gardens Apt. 064\nWest Tretown, WV 24493-7379','gferry@example.net','79756534289','1993-03-14',NULL),
-('81','Kevin','Conroy','2020-07-04 20:12:22','730 Ward Meadow Suite 248\nGabrielhaven, RI 28025','eichmann.felicity@example.com','78831427425','1998-12-27',NULL),
-('82','Donald','Kub','2017-03-21 17:22:18','310 Ullrich Forges\nChasityfurt, NC 17787','o\'kon.lois@example.net','79312577519','1981-09-03',NULL),
-('83','Katherine','Rice','2016-11-12 16:13:06','1732 Charlie Center\nPort Glennieville, NJ 38749-8818','gfadel@example.net','78138136296','1972-10-18',NULL),
-('84','Makayla','Dickinson','2012-02-24 02:36:02','081 Hettinger Tunnel\nAmariside, WY 12716','jaida72@example.org','79056011185','1983-08-24',NULL),
-('85','Gavin','Hane','2014-09-20 12:43:30','731 Marks Meadow\nPort Ryleigh, SD 11306-1935','crist.urban@example.org','79203639116','1993-06-19',NULL),
-('86','Dena','Witting','2016-04-30 20:16:09','559 Hauck Junctions Apt. 117\nSouth Jaylinstad, ND 48828','johnson.o\'keefe@example.org','79003249074','1992-08-20',NULL),
-('87','Antonio','Bogisich','2018-10-26 06:50:32','297 Abel Manor\nHartmannland, KS 68897','shane@example.net','78566718538','1976-06-24',NULL),
-('88','Casandra','Mayert','2014-10-19 03:31:03','1937 Nolan Parkway\nPort Edythe, UT 65739','kade.thompson@example.org','79085301761','1984-01-05',NULL),
-('89','Rollin','Rempel','2012-02-14 14:09:32','264 Josie Turnpike\nWest Markus, MS 51678','jamar.mertz@example.com','78205234598','1977-03-18',NULL),
-('90','Joe','Zulauf','2011-11-10 00:30:08','29144 Ziemann Wells\nSolonside, MS 07658-5888','douglas.marlee@example.com','79532351827','1973-09-25',NULL),
-('91','Cathrine','Hand','2020-03-03 21:28:03','67415 Sylvan Mountain Apt. 069\nHermanland, CT 78910','herbert.welch@example.com','78947070831','1988-05-06',NULL),
-('92','Isai','Bosco','2012-07-29 00:42:31','52618 Berenice Square\nSouth Gilberto, WY 85300','royal.cole@example.net','78935636591','1984-03-12',NULL),
-('93','Damien','Collins','2011-10-22 13:19:09','278 Lind Unions Suite 501\nRubyemouth, NJ 13575','rodrick57@example.com','78700090734','1983-10-28',NULL),
-('94','Benton','Hand','2020-02-27 06:50:22','5367 Freda Port Apt. 756\nWest Cademouth, RI 05170-2026','jordon20@example.org','79067205710','1991-06-28',NULL),
-('95','Nola','Keebler','2014-12-02 00:54:39','610 Zackery Falls\nSouth Dianabury, MS 77387','twila.durgan@example.net','78081641852','1999-08-13',NULL),
-('96','Alyson','Mueller','2018-01-30 17:15:30','0559 Bogan Crest Suite 714\nWatsicaville, DE 38530-3337','grant.maryse@example.com','79349557526','2000-03-28',NULL),
-('97','Richie','Prohaska','2020-07-18 04:10:39','341 Nicolas Rue\nSchulistmouth, ID 43741-1430','swaniawski.max@example.net','79049663108','1974-04-08',NULL),
-('98','Ethan','Gibson','2012-12-27 09:21:55','88739 Harry Stream Suite 425\nCarterfort, FL 83065-0253','sister.considine@example.net','78756535943','1975-05-09',NULL),
-('99','Lisa','Luettgen','2013-06-11 05:04:13','722 Schulist Land Suite 859\nWest Maurineside, VT 78663-4127','blick.gustave@example.net','79033553741','1997-10-27',NULL),
-('100','Elwin','Maggio','2013-01-21 15:46:28','85218 Hope Trail Suite 161\nFrancescaborough, KS 22257','rowe.mozelle@example.org','79484665898','1976-04-17',NULL); 
+INSERT INTO `owner` 
+(firstname, lastname, created_at, address, email, phone, age)
+VALUES 
+('Cristopher', 'Beahan', '2007-09-21 11:08:46', '78424 Buckridge Ridges\nNew Zoeyberg, AR 20812', 'toney.grady@example.org', '79772716526', 71),
+('Ericka', 'Graham', '2018-07-25 20:47:55', '87833 Cole Throughway\nVolkmanberg, NH 67799', 'ajenkins@example.com', '79548516486', 23),
+('Lukas', 'Eichmann', '2010-09-12 16:52:38', '299 Bartell Square Suite 302\nRockyberg, IA 72389-5030', 'cordell.ebert@example.net', '79771092814', 30),
+('Serenity', 'Cummerata', '2006-07-24 21:14:53', '5259 Garnet Heights Apt. 277\nWest Orlofurt, WY 31798', 'mwelch@example.net', '79993401312', 38),
+('Maci', 'Hahn', '2012-03-04 19:40:23', '9570 Dagmar Meadows Apt. 861\nO\'Connellburgh, WI 31405', 'tracy18@example.org', '79101937901', 42),
+('Helene', 'Hammes', '2013-12-17 05:16:14', '1019 Harrison Crossing\nEffiemouth, VT 59742', 'maggio.kyla@example.net', '79099802340', 41),
+('Myra', 'Powlowski', '2020-05-27 02:22:19', '63004 Bogisich Valley Apt. 178\nSouth Eastonberg, WI 56783-7088', 'andrew18@example.com', '79836225326', 47),
+('Janice', 'Gleason', '2020-03-22 21:26:06', '279 McLaughlin Ports\nMullerton, WA 16517-1287', 'salma.fahey@example.com', '79764261919', 51),
+('Percy', 'Bartoletti', '2006-07-18 01:45:10', '0379 Cayla Center\nMaceyland, FL 38399-6230', 'anastasia81@example.net', '79849514501', 58),
+('Margarett', 'Leannon', '2016-01-13 20:04:10', '45026 Griffin Groves Suite 803\nNorth Xaviertown, VA 07349', 'gbuckridge@example.org', '79316669357', 38),
+('Maxine', 'Vandervort', '2012-03-11 03:23:17', '616 Kerluke Squares\nPort Harmony, MN 23469-8465', 'princess.skiles@example.com', '79022228829', 34),
+('Lulu', 'Roob', '2017-07-25 20:48:30', '6616 Heather Viaduct Apt. 873\nFletaborough, SD 37308-9527', 'isac10@example.com', '79183887183', 31),
+('Myra', 'Boyer', '2016-01-26 13:16:18', '038 Gulgowski Center Apt. 444\nNew Myrtis, KY 14655', 'klarson@example.org', '79448352920', 35),
+('Chance', 'Johnston', '2010-05-14 05:57:59', '31475 Wilford Throughway\nRupertville, UT 40405', 'o\'keefe.declan@example.net', '79156941799', 22),
+('Damion', 'Moen', '2017-04-30 05:16:20', '632 Marlon Oval Apt. 693\nBuckridgeton, MN 04390-1907', 'koss.elva@example.org', '79070715976', 21),
+('Jacklyn', 'McKenzie', '2008-05-10 16:04:30', '0804 Keeling Dam\nEast Peyton, KS 21252', 'ebert.tamia@example.com', '79005245088', 60),
+('Annamarie', 'Moen', '2006-07-17 11:24:58', '3926 Jessyca View\nWehnermouth, OK 48730', 'cynthia52@example.com', '79896429108', 18),
+('Mallory', 'McCullough', '2019-07-16 20:03:28', '1776 Durward Loop\nWest Abdullah, RI 22622-0941', 'wilkinson.jose@example.net', '79025093966', 25),
+('Dashawn', 'Rempel', '2015-02-05 11:10:43', '88155 Marquardt Flats\nWest Ellie, WI 26023', 'schaden.donnie@example.net', '79839545824', 48),
+('Scotty', 'Kuhn', '2008-08-17 10:47:55', '109 Bergnaum Camp Apt. 756\nTremblaybury, FL 54313-8246', 'beier.marquis@example.com', '79410095051', 45),
+('Elissa', 'Wilderman', '2008-12-31 16:18:29', '262 Sanford Spur\nNew Sheldonbury, ID 08352-1466', 'shields.stevie@example.org', '79730616630', 27),
+('Pascale', 'Shanahan', '2016-04-11 19:50:43', '415 Reichert Brook Suite 516\nLake Dakota, HI 01836', 'rhea.dicki@example.org', '79454289041', 56),
+('Jeromy', 'Reichert', '2008-03-05 02:25:04', '96043 Langosh Drive Apt. 934\nNew Tremainemouth, WA 70058', 'prosacco.shanie@example.org', '79402179439', 20),
+('Jorge', 'Marvin', '2019-03-28 03:37:12', '78039 Franecki Lake Apt. 647\nTodmouth, PA 75490', 'kreichel@example.org', '79997248115', 52),
+('Tyson', 'Stark', '2014-11-03 20:53:07', '6284 Brando Motorway Apt. 460\nSouth Adam, NM 89198-5287', 'webster33@example.org', '79037340940', 29),
+('Eric', 'Sipes', '2016-03-14 08:10:11', '4832 Orpha Plaza\nNew Olgatown, MS 12754', 'uriel13@example.com', '79074846432', 42),
+('Anabel', 'Lindgren', '2009-05-18 08:00:07', '85248 Dicki Harbors Suite 221\nNew Felicia, OR 98735-1093', 'swolff@example.org', '79864791948', 25),
+('Angelo', 'Nader', '2007-12-24 01:52:25', '3613 Bauch Neck\nEast Evehaven, NH 24687-9970', 'melissa89@example.com', '79732292266', 32),
+('Ora', 'Jacobson', '2008-10-21 03:42:58', '0408 Heaney Gardens\nWalterland, DE 49683-9415', 'kiehn.sabrina@example.net', '79670829882', 18),
+('Bonita', 'Rice', '2006-10-30 08:54:29', '298 Felipa Squares\nSouth Karen, MS 71144', 'vborer@example.org', '79511058447', 25),
+('Ethyl', 'Mante', '2006-01-10 15:43:25', '71963 Kulas Courts\nDachville, AL 45402', 'adeline21@example.org', '79961672386', 69),
+('Prudence', 'Rath', '2013-03-17 07:23:31', '600 Romaguera Course Suite 831\nSouth Ilianaton, WA 74379', 'lowell98@example.org', '79701222257', 32),
+('Erick', 'Rowe', '2015-07-17 14:20:38', '2281 Skylar Mills Suite 533\nAldaburgh, CT 80819', 'cwilliamson@example.org', '79101685447', 32),
+('Ally', 'Bartoletti', '2015-10-29 10:12:09', '104 Kadin Street Suite 885\nWardberg, DE 54342-5576', 'powlowski.filiberto@example.net', '79728885664', 21),
+('Linda', 'Krajcik', '2017-10-22 09:23:25', '850 Corwin Rapid Apt. 531\nToymouth, DC 48719-2065', 'vdeckow@example.net', '79758480757', 73),
+('Mariano', 'Veum', '2017-01-08 08:39:43', '1024 Ken Fords\nLueilwitzshire, MT 90000-8235', 'zshanahan@example.org', '79404876859', 29),
+('Jaron', 'Borer', '2007-08-19 21:26:52', '78100 Therese Plain\nNew Stephanyhaven, NE 19306', 'fidel91@example.net', '79781285365', 62),
+('Winston', 'Schaefer', '2010-04-30 12:32:40', '6415 Buford Parkway Suite 898\nKayleeburgh, VA 30093', 'greta37@example.com', '79721419132', 38),
+('Joannie', 'Yost', '2014-01-23 23:15:52', '398 Ferry Glen Apt. 592\nNew Katelin, NJ 68135', 'elangworth@example.net', '79492911030', 48),
+('Roderick', 'Padberg', '2014-07-25 12:01:45', '36312 Nelson Turnpike Suite 283\nCassidyside, MD 10468', 'hintz.jordyn@example.com', '79158898684', 35),
+('Nelson', 'Herman', '2007-01-23 01:42:51', '4640 Jazmin Spur\nPort Rudy, UT 72716-0315', 'rogahn.houston@example.com', '79987210210', 28),
+('Katarina', 'Stracke', '2014-12-06 20:09:43', '2008 Edison Fort\nMertzfort, WV 30942', 'westley48@example.com', '79758648298', 24),
+('Sandrine', 'Will', '2007-03-14 08:37:38', '690 Jadyn Meadow\nDustymouth, NM 82478', 'shane.pacocha@example.org', '79889766520', 51),
+('Michelle', 'Murazik', '2008-12-11 12:08:03', '3719 Steuber Skyway Suite 281\nNorth Jarrett, UT 70864', 'stella83@example.org', '79299129362', 74),
+('Jules', 'Schimmel', '2011-10-06 08:44:09', '3193 Roxanne Circle\nKiehnton, IL 48117', 'sophie84@example.net', '79135114736', 71),
+('Rylan', 'Gaylord', '2019-12-26 09:46:47', '9990 Jett Highway Apt. 057\nNorth Elda, RI 54661-1318', 'dubuque.zena@example.org', '79963725887', 64),
+('Alverta', 'Pagac', '2011-12-07 04:29:56', '19657 Tad Stream\nJuvenalhaven, MT 29026-3335', 'dvolkman@example.net', '79019770439', 55),
+('Vivienne', 'Kihn', '2009-05-16 04:22:22', '6347 Thad Stream\nPaigefort, PA 45322', 'lacey.hyatt@example.com', '79572010420', 69),
+('Drake', 'McDermott', '2008-05-16 00:37:54', '189 Mason Course\nWest Thurmantown, VT 87939-8961', 'ggrady@example.org', '79753140072', 64),
+('Liza', 'Kunze', '2018-12-09 13:39:09', '30749 Cristina Neck\nZariachester, VT 21364-6770', 'nledner@example.net', '79588962580', 55),
+('Dallas', 'Carroll', '2010-01-30 09:36:21', '375 Gabriella Plains Apt. 853\nDestinihaven, NH 33001', 'rhoda.jenkins@example.com', '79293745889', 54),
+('Adah', 'Durgan', '2020-02-26 00:54:35', '77362 Lance Dam Apt. 877\nRicehaven, WI 95346-0821', 'eliseo34@example.org', '79705945836', 74),
+('Mellie', 'Reichert', '2020-06-23 14:00:37', '7301 Zion Branch Suite 750\nSouth Hudson, NV 71903', 'qsipes@example.org', '79940171383', 19),
+('Claire', 'Hudson', '2015-01-21 21:54:48', '38158 Issac Prairie Suite 049\nWest Serenityborough, FL 90417-8061', 'keaton74@example.com', '79694971803', 51),
+('Jazmyne', 'Turcotte', '2006-07-31 11:59:45', '2037 Miller Wells Apt. 601\nLake Margarettside, RI 80627', 'mpurdy@example.org', '79530035570', 75),
+('Jaime', 'Schinner', '2006-04-28 20:47:19', '02577 Michel Glen Suite 484\nNew Edgarville, GA 68068', 'eleanore.goodwin@example.com', '79844499586', 33),
+('Jayne', 'Mante', '2007-06-14 04:57:21', '8341 Curt Camp Apt. 828\nMckennabury, MT 71700-1356', 'yundt.etha@example.net', '79172503953', 44),
+('Josh', 'Schiller', '2009-07-25 23:11:05', '6583 Frederique Valley\nSibylberg, AL 83021', 'ernest79@example.org', '79850182566', 70),
+('Saul', 'Jacobs', '2015-03-23 18:04:10', '1222 VonRueden Radial\nGriffinfurt, MD 90323-2572', 'stanley.sawayn@example.org', '79856172431', 71),
+('Casimer', 'Kreiger', '2009-04-15 01:21:34', '0558 O\'Hara Orchard Apt. 407\nNorth Dawn, MI 81918-1264', 'metz.moriah@example.com', '79565394188', 43),
+('Joy', 'Kunze', '2008-06-24 17:29:51', '903 Christ Prairie Suite 430\nNorth Leonor, WY 29793-9244', 'zakary.hilpert@example.com', '79744166036', 49),
+('Marilou', 'Raynor', '2015-03-14 17:07:37', '592 Aufderhar Branch\nSouth Cheyenneborough, VT 08592-2032', 'wintheiser.selina@example.com', '79290131268', 57),
+('Wiley', 'Stokes', '2009-03-27 04:05:39', '0197 Schroeder Islands Suite 106\nRippinchester, MN 51415-8920', 'ethel.o\'conner@example.com', '79670901460', 66),
+('Daryl', 'Wunsch', '2013-07-07 13:35:53', '8990 Tanya Trafficway Suite 412\nNorth Quinnland, UT 64154-5840', 'afarrell@example.com', '79989074592', 38),
+('Dejuan', 'Jaskolski', '2008-04-28 00:35:51', '11682 Bednar Springs\nNew Will, NJ 72076', 'nelda.wiza@example.net', '79366033121', 27),
+('Verna', 'Lehner', '2017-12-18 03:33:33', '46278 Romaguera Plaza\nSouth Joannie, MS 40138-1710', 'lloyd.crooks@example.org', '79415610663', 37),
+('Cassie', 'Ullrich', '2018-01-31 09:29:24', '49645 Stiedemann Course\nEmmerichside, CT 84493-4812', 'white.quinn@example.org', '79197467498', 23),
+('Javon', 'Schmeler', '2010-06-27 16:57:13', '7374 Gaylord Corner\nWest Evalyn, TN 45722', 'macejkovic.benny@example.org', '79275385374', 43),
+('Eldon', 'Schneider', '2011-11-21 11:31:23', '37111 Cummerata River Apt. 703\nVonRuedenfort, AR 80476-4174', 'ford.vonrueden@example.com', '79247652836', 21),
+('Janet', 'Morissette', '2012-05-29 08:36:28', '139 Kling Bridge\nBernhardhaven, VT 46061-5715', 'pkoelpin@example.org', '79350258025', 24),
+('Sabina', 'Reichel', '2016-10-31 15:52:33', '1016 Gerlach Overpass\nNorth Lavina, MO 06163-8228', 'kailee.farrell@example.com', '79545683725', 34),
+('Keaton', 'Denesik', '2008-06-28 01:51:11', '21968 Amira Ville Suite 052\nNew Princess, MN 13503', 'carmella.pacocha@example.com', '79904231897', 72),
+('Orion', 'Gottlieb', '2011-05-29 07:39:16', '022 Jett Cliff Apt. 921\nEast Kayleyfort, OH 47107', 'candice40@example.org', '79254489986', 47),
+('Minnie', 'Steuber', '2009-08-17 07:17:31', '859 Mariam Court Apt. 149\nEast Arnold, MI 47734', 'alessandra79@example.net', '79267293122', 39),
+('Edgardo', 'Pfeffer', '2018-04-25 08:06:55', '47626 Dana Meadows Suite 461\nRitchiemouth, WA 24481-8443', 'mraz.constantin@example.com', '79254712430', 52),
+('Heather', 'Altenwerth', '2017-08-30 22:17:58', '233 Ashly Land Apt. 954\nLeannonton, UT 50351-4254', 'haley.maria@example.net', '79159221649', 56),
+('Selmer', 'Mosciski', '2016-09-10 07:50:15', '012 Jayson Garden\nCristton, NY 10380-7187', 'nora50@example.com', '79613408442', 67),
+('Estel', 'Hintz', '2010-01-24 08:24:58', '65041 Gorczany Oval\nChaneltown, CT 77387', 'ofritsch@example.org', '79943972134', 36),
+('Layla', 'Ledner', '2009-11-25 12:21:06', '84758 O\'Keefe Park\nMayerchester, UT 33629', 'houston65@example.org', '79667844557', 39),
+('Kasandra', 'Yundt', '2010-05-29 22:54:29', '92440 Volkman Stravenue\nWest Shermanfurt, SD 44484', 'ward.ole@example.com', '79047356656', 73),
+('Emilio', 'Mills', '2010-01-12 22:28:51', '842 Bradley Pass\nRunolfssonport, NJ 11108-6857', 'yvette11@example.com', '79028702761', 48),
+('Jovan', 'Spencer', '2009-12-31 01:53:17', '89222 Kunde Ridge Apt. 527\nFriedabury, WA 28997', 'dock98@example.org', '79325301837', 62),
+('Felix', 'Kuhn', '2013-08-11 04:44:43', '3602 Boyd Villages Apt. 336\nRoderickton, TX 50455', 'daugherty.ludie@example.com', '79779393694', 46),
+('Kaylie', 'McCullough', '2007-08-07 08:52:55', '084 Bayer Extensions\nErlingmouth, MI 29892', 'abdul.dickens@example.net', '79371286338', 51),
+('Joyce', 'Oberbrunner', '2012-05-14 07:02:46', '650 Melany Dale Apt. 820\nMarisolchester, RI 47567', 'glover.madison@example.net', '79120911479', 59),
+('Rory', 'Abshire', '2006-07-20 19:56:46', '9211 Bailey Station Apt. 292\nFeeneyland, MN 99203-2141', 'alfonzo.schaefer@example.net', '79194010300', 30),
+('Georgette', 'Connelly', '2010-08-22 08:20:01', '80765 Grady Locks\nWademouth, KS 67568-5516', 'cheyanne.koss@example.net', '79585759728', 39),
+('Onie', 'Reynolds', '2016-11-11 22:55:47', '5091 Casper Villages Suite 390\nDeckowview, MD 11358-8154', 'monserrat.ferry@example.net', '79395667578', 65),
+('Allison', 'Graham', '2015-12-08 13:21:56', '30738 Grant Ports\nSouth Pierce, IN 18190', 'romaguera.aric@example.com', '79023372857', 34),
+('Jettie', 'Wilderman', '2006-05-03 06:05:37', '010 Medhurst Grove\nLake Gertrude, LA 87548-1831', 'carroll68@example.com', '79499484946', 47),
+('Blaze', 'Jaskolski', '2006-08-30 13:11:17', '49310 Larry Trafficway\nWest Tomasahaven, PA 60062-6416', 'monahan.ola@example.com', '79646841807', 57),
+('Kaela', 'Gulgowski', '2014-02-19 20:25:02', '0591 Denesik Hills Suite 018\nKohlerhaven, NY 98848', 'newell.ankunding@example.com', '79621518560', 50),
+('Ethel', 'Rowe', '2009-12-22 19:08:20', '392 Schiller Lodge\nEast Dorothy, FL 02037', 'gthompson@example.org', '79141104359', 29),
+('Mckenna', 'Gleason', '2018-12-25 17:15:28', '2509 Sigmund Rest Apt. 564\nBoehmport, AL 17410', 'franecki.myrtle@example.net', '79960078215', 32),
+('Darius', 'Lind', '2017-05-05 08:35:31', '7009 Danika Loop Apt. 881\nBayerland, DC 05317-5380', 'vsenger@example.com', '79222117885', 35),
+('Eloy', 'Hickle', '2009-12-09 23:51:07', '7132 Heller Garden Apt. 300\nBlandaview, FL 43113', 'mallory61@example.com', '79609779324', 75),
+('Percival', 'Bailey', '2013-04-18 12:35:28', '68970 Caroline Way\nNew Hilbert, AR 42670-2544', 'xkunde@example.net', '79495154630', 42),
+('Myrna', 'Senger', '2013-10-23 00:12:23', '84468 Virginie Street Suite 291\nZoietown, TN 51567-4143', 'derick.kling@example.org', '79375062046', 37),
+('Myrtie', 'Littel', '2008-10-15 15:54:52', '44493 Derek Street\nOpheliahaven, DE 44784', 'abagail08@example.com', '79334562540', 49),
+('Kaleta', 'Galgawski', '2012-02-24 21:25:02', '0591 Denesik Hills Suite 114\nKohlerhaven, NY 98848', 'kaleta.galgawski@example.com', '79621518460', 38);
 
 INSERT INTO `animal` 
 (owner_id, name, kind, breed, gender, birthday, castration, created_at, contract_num)
@@ -1320,3 +1322,98 @@ VALUES
 ('139','удаление новообразования','2008-10-14 23:21:47'),
 ('62','удаление клыка','2014-03-06 12:13:02'),
 ('104','удаление моляра','2015-04-25 11:06:16'); 
+
+-- Показывает кто является владельцем животного по id питомца
+USE `animals`;
+DROP procedure IF EXISTS `animal_owner`;
+DELIMITER $$
+USE `animals`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `animal_owner`(animal_num int)
+BEGIN
+SELECT 
+owner.firstname, owner.lastname, animal.id, name, kind, breed  
+FROM animal
+JOIN  owner ON animal.owner_id = owner.id
+WHERE animal.id = animal_num;
+END$$
+DELIMITER ;
+
+-- Внести в базу нового владельца
+USE `animals`;
+DROP procedure IF EXISTS `new_owner`;
+DELIMITER $$
+USE `animals`$$
+CREATE PROCEDURE `new_owner` (f VARCHAR(255), l VARCHAR(255), a VARCHAR(255), e VARCHAR(255), p BIGINT(11), age INT(3))
+BEGIN
+INSERT INTO 
+	owner (firstname, lastname, address, email, phone, age)
+	VALUE (f, l, a, e, p, age);		
+END$$
+DELIMITER ;
+
+-- Внести в базу новое животное
+USE `animals`;
+DROP procedure IF EXISTS `new_animal`;
+DELIMITER $$
+USE `animals`$$
+CREATE PROCEDURE `new_animal` (o INT(10), n VARCHAR(255), k VARCHAR(255), bre VARCHAR(50), g TINYINT(1), bir DATE, cas TINYINT(1), cont INT(10))
+BEGIN
+INSERT INTO
+	animal (owner_id, name, kind, breed, gender, birthday, castration, contract_num)
+	VALUE (o, n, k, bre, g, bir, cas, cont);		
+END$$
+DELIMITER ;
+
+-- Ввести дату смерти животного
+USE `animals`;
+DROP procedure IF EXISTS `end_animal`;
+DELIMITER $$
+USE `animals`$$
+CREATE PROCEDURE `end_animal` (id_animal INT, end_ DATE)
+BEGIN
+UPDATE animal SET end = end_ 
+WHERE animal.id = id_animal;
+END$$
+DELIMITER ;
+
+-- Тригер: запрет на регистрацию и заключения договора с несовершеннолетним гражданином
+DROP TRIGGER IF EXISTS `animals`.`owner_BEFORE_INSERT`;
+DELIMITER $$
+USE `animals`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `owner_BEFORE_INSERT` BEFORE INSERT ON `owner` FOR EACH ROW BEGIN
+IF NEW.age < 18 THEN
+SIGNAL SQLSTATE '47000'
+SET MESSAGE_TEXT = 'Запрещена регистрация несовершеннолетнего гражданина';
+END IF;
+END$$
+DELIMITER ;
+
+-- Показать данные всех владельцев с зарегистрированными на них животными и данные этих животных 
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `animals`.`owner_animal_info` AS
+    SELECT 
+        `animals`.`owner`.`id` AS `id_owner`,
+        `animals`.`owner`.`firstname` AS `firstname`,
+        `animals`.`owner`.`lastname` AS `lastname`,
+        `animals`.`owner`.`created_at` AS `created_at`,
+        `animals`.`owner`.`address` AS `address`,
+        `animals`.`owner`.`email` AS `email`,
+        `animals`.`owner`.`phone` AS `phone`,
+        `animals`.`owner`.`age` AS `age_owner`,
+        `animals`.`animal`.`id` AS `id_animal`,
+        `animals`.`animal`.`name` AS `name`,
+        `animals`.`animal`.`kind` AS `kind`,
+        `animals`.`animal`.`breed` AS `breed`,
+        IF((`animals`.`animal`.`gender` = 0),
+            'жен',
+            'муж') AS `gender`,
+        `animals`.`animal`.`birthday` AS `birthday_animal`,
+        IF((`animals`.`animal`.`castration` = 1),
+            'стер',
+            'не стер') AS `castration`
+    FROM
+        (`animals`.`animal`
+        JOIN `animals`.`owner` ON ((`animals`.`owner`.`id` = `animals`.`animal`.`owner_id`)))
